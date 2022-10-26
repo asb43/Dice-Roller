@@ -6,4 +6,6 @@
     <string name="action_three">Three</string>
     <string name="action_stop">Stop</string>
     <string name="dice_one">1</string>
+    <string name="action_four">four</string>
+    <string name="action_five">five</string>
 </resources>

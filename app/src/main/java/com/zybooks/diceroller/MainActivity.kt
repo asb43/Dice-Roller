@@ -9,10 +9,12 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.zybooks.diceroller.databinding.ActivityMainBinding
+import androidx.fragment.app.DialogFragment
 
 const val MAX_DICE = 5
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    RollLengthDialogFragment.OnRollLengthSelectedListener{
 
     private var numVisibleDice = MAX_DICE
     private lateinit var diceList: MutableList<Dice>
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var optionsMenu: Menu
     private var timer: CountDownTimer? = null
     private lateinit var binding: ActivityMainBinding
+    private var timerLength = 2000L
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +96,12 @@ class MainActivity : AppCompatActivity() {
                 rollDice()
                 true
             }
+            R.id.action_roll_length -> {
+                val dialog = RollLengthDialogFragment()
+                dialog.show(supportFragmentManager, "rollLengthDialog")
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -100,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         timer?.cancel()
 
         // Start a timer that periodically changes each visible dice
-        timer = object : CountDownTimer(2000, 100) {
+        timer = object : CountDownTimer(timerLength, 100) {
             override fun onTick(millisUntilFinished: Long) {
                 for (i in 0 until numVisibleDice) {
                     diceList[i].roll()
@@ -126,5 +136,11 @@ class MainActivity : AppCompatActivity() {
         for (i in numVisible until MAX_DICE) {
             diceImageViewList[i].visibility = View.GONE
         }
+    }
+
+    override fun onRollLengthClick(which: Int) {
+
+        timerLength = 1000L * (which + 1)
+
     }
 }

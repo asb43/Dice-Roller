@@ -8,4 +8,13 @@
     <string name="dice_one">1</string>
     <string name="action_four">four</string>
     <string name="action_five">five</string>
+    <!-- Dialog title -->
+    <string name="pick_roll_length">Roll length?</string>
+
+    <!-- Dialog list options -->
+    <string-array name="length_array">
+        <item>Short</item>
+        <item>Medium</item>
+        <item>Long</item>
+    </string-array>
 </resources>

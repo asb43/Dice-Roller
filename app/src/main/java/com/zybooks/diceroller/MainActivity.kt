@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.zybooks.diceroller.databinding.ActivityMainBinding
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(),
     private var timer: CountDownTimer? = null
     private lateinit var binding: ActivityMainBinding
     private var timerLength = 2000L
-
+    private var storing = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(),
             diceImageViewList[i].setImageDrawable(diceDrawable)
             diceImageViewList[i].contentDescription = diceList[i].imageId.toString()
         }
+
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -114,12 +116,24 @@ class MainActivity : AppCompatActivity(),
             override fun onTick(millisUntilFinished: Long) {
                 for (i in 0 until numVisibleDice) {
                     diceList[i].roll()
+
                 }
                 showDice()
+
             }
 
             override fun onFinish() {
                 optionsMenu.findItem(R.id.action_stop).isVisible = false
+               /* storing += diceList[0].number
+                storing += diceList[1].number
+                storing += diceList[2].number
+                storing += diceList[3].number
+                storing += diceList[4].number*/
+                for (i in 0 until numVisibleDice){
+                    storing += diceList[i].number
+                }
+                Toast.makeText(applicationContext, "You rolled a total of " + storing, Toast.LENGTH_LONG).show()
+                storing = 0
             }
         }.start()
     }
